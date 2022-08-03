@@ -74,19 +74,22 @@ plugins:
 
 nav:
   - Home: index.md
-  - OpenTelemetry Workshop:
-    - Introduction: introduction/index.md
-    - Preparation: apm/workshop-steps/prep.md
-    - Labs:
-      - APM for a Single Host (Execute in Order):
-        - 1. Install Otel Collector On Host: apm/host/index.md
-        - 2. Python- Deploy HTTP Server and Client: apm/host/python.md
-        - 3. Java- Deploy HTTP Client: apm/host/java.md
-        - 4. Node.js- Deploy HTTP Client: apm/host/node.md
-      - APM for K8s / containerized apps:
-        - APM for k8s: apm/k8s/index.md
-      - OPTIONAL/ADVANCED:
-        - Otel Collector and APM for Docker: apm/docker/index.md
+  - Introduction: introduction/index.md
+  - Preparation: apm/workshop-steps/prep.md
+  - Labs:
+    - "Lab 1: APM for a Single Host":
+      - "Task 1: Install Otel Collector On Host":
+        - "Step 1: Data Setup on Linux Host": apm/host/index.md
+      - "Task 2: Observability for Python App":
+          - "Step 1: Deploy HTTP Server": apm/host/python-step-1.md
+          - "Step 2: Deploy Client": apm/host/python-step-2.md
+          - "Step 3: Validate Spans in APM": apm/host/python-step-3.md
+      - "Task 3: Java - Deploy HTTP Client": apm/host/java.md
+      - "Task 3: Node.js - Deploy HTTP Client": apm/host/node.md
+    - "Lab 2: APM for K8s & Containerized Apps":
+      - APM for k8s: apm/k8s/index.md
+    - OPTIONAL/ADVANCED:
+      - Otel Collector and APM for Docker: apm/docker/index.md
     - Guides:
       - APM Examples:
         - ECS-EC2: apm/ecs/index-ec2.md

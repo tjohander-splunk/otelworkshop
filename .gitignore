@@ -3,3 +3,4 @@
 site
 .github
 venv/
+/misc/ecs-fargate/tsj-tracegen-java-otel-fargate-otelcol.json

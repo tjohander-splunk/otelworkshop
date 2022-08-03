@@ -1,50 +1,11 @@
 
 ---
 
-Each step should be performed in a separate terminal window.
+* Each step should be performed in a separate terminal window.
 
-Make sure your Ubuntu environment was prepared properly as described in the **Preparation** section.  
+* Make sure your Ubuntu environment was prepared properly as described in the **Preparation** section.  
 
-## Configure Environment Variables for Otel and Run Python Flask Server
-
-**Open the first terminal window** in your Linux instance and set up environment and run Python Flask server using auto-instrumentation:
-
-!!! important
-    If you are doing this workshop as part of a group, before the next step, add your initials do the APM environment:
-    edit the `run-server.sh` script below and add your initials to the environment i.e. change:  
-    `export OTEL_RESOURCE_ATTRIBUTES=deployment.environment=apm-workshop`  
-    to    
-    `export OTEL_RESOURCE_ATTRIBUTES=deployment.environment=sjl-apm-workshop`  
-
-```bash
-cd ~/otelworkshop/host/python
-source run-server.sh
-```
-
-You will see the server startup text when this is run.
-
-## Run Python Client Application
-
-**Open a new terminal window** in your Linux instance and run the Python client to sent POST requests to the Flask server:  
-
-Run the client Python app via the `splunk-py-trace` command to send requests to the Flask server:  
-
-!!! important
-    If you are doing this workshop as part of a group, before the next step, add your initials do the APM environment:
-    edit the `run-client.sh` script below and add your initials to the environment i.e. change:  
-    `export OTEL_RESOURCE_ATTRIBUTES=deployment.environment=apm-workshop`  
-    to    
-    `export OTEL_RESOURCE_ATTRIBUTES=deployment.environment=sjl-apm-workshop`  
-
-```bash
-cd ~/otelworkshop/host/python
-source run-client.sh
-```
-
-The `python-requests.py` client will make calls to the flask server with a random short sleep time.  
-You can stop the requests with ++ctrl+c++
-
-## Validate span are being sent
+## Validate spans are being sent
 
 **Open a new terminal window** in your Linux instance to check OpenTelemetry Collector Statistics to see that spans are being sent.
 
@@ -55,9 +16,9 @@ will show the metrics and spans being gathered and sent by the Collector.
 
 Lynx is a text browser that was installed during with the `setup-tools`. Enabling a web browser to access your environment will allow for a full web GUI.  
 
-![zpagaes](../../images/06-zpages.png)
+![zpagaes](../../../images/06-zpages.png)
 
-## APM Dashboard
+### APM Dashboard
 
 Traces / services will now be viewable in the APM dashboard. A new service takes about 90 seconds to register for the first time, and then all data will be available in real time.  
 

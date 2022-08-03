@@ -11,8 +11,6 @@ Choose the following:
 | **Mode** | Agent |
 | **Log Collection** | No |  
 
-Follow Data Setup Wizard for instructions on Linux installation:
-
 ![Data Setup](../../images/03-datasetup.png)
 
 ![Linux](../../images/04-datasetup-linux.png)
