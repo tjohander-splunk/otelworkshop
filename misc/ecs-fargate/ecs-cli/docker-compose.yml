@@ -1,0 +1,30 @@
+version: '3'
+services:
+  tracegen-java-otel-fargate:
+    image: docker.io/stevelsplunk/splk-java-autogen
+    environment:
+      - SPLUNK_ACCESS_TOKEN=<some-access-token>
+      - OTEL_RESOURCE_ATTRIBUTES=deployment.environment=<some-environment>
+      - OTEL_SERVICE_NAME=tracegen-java-fargate
+      - SPLUNK_PROFILER_ENABLED=true
+    labels:
+      app: "tracegen-java-otel-fargate"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: tutorial
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: web
+  splunk-otel-collector:
+    image: quay.io/signalfx/splunk-otel-collector:latest
+    environment:
+      - ECS_METADATA_EXCLUDED_IMAGES=[\"quay.io/signalfx/splunk-otel-collector\"]
+      - SPLUNK_ACCESS_TOKEN=<some-access-token>
+      - SPLUNK_CONFIG=/etc/otel/collector/ecs_ec2_config.yaml
+      - SPLUNK_REALM=us1
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: tutorial
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: otel

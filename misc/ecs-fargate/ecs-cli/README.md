@@ -24,7 +24,7 @@ aws iam attach-role-policy \
 # Configure ECS CLI
 In this section we will setup an ECS CLI Profile to allow your instance of the ECS CLI to manage multiple clusters simultaneously.
 
-> **Note:** The `ECS CLI` is a different application from the `AWS CLI` used in the previous steps.  The ECS CLI offers a streamlined means to interact with AWS ECS Resources.
+> **Note:** The `ECS CLI` is a different application from the `AWS CLI` used in the previous steps.  The ECS CLI offers a streamlined means to interact with AWS ECS Resources.  
 
 ## Create an ECS Cluster Configuration Object
 Create a Fargate-based ECS Cluster
@@ -135,8 +135,8 @@ Result:
 ```
 
 # Create/Modify a Compose File and ECS Params File
-## Compose File
-A sample application is defined in `docker-compose.yaml` file.  This is a basic, instrumented Java application. As an additional workload to the ECS task definition, an instance of the Splunk Otel Collector is running alongside the application container.
+## Compose File 
+A sample application is defined in `docker-compose.yaml` file.  This is a basic, instrumented Java application. As an additional workload to the ECS task definition, an instance of the Splunk Otel Collector is running alongside the application container.    
 
 ## Params File
 In addition to the Docker compose information, there are some parameters specific to Amazon ECS that you must specify for the service. Using the VPC, subnet, and security group IDs from the previous step, fill in the values in the `ecs-params.yaml` file
