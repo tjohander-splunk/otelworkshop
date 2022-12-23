@@ -3,3 +3,8 @@
 site
 .github
 venv/
+/.idea/.gitignore
+/.idea/aws.xml
+/.idea/modules.xml
+/.idea/otelworkshop.iml
+/.idea/vcs.xml
