@@ -62,7 +62,8 @@ Cluster creation succeeded.
 ```
 
 ## Fetch Security Group ID from the new VPC
-The previous step created a minimally configured VPC for you.  You will need the security group ID of this newly-minted VPC.  Execute this step to fetch that ID.  Note: This step uses the `aws-cli` not the `ecs-cli`
+The previous step created a minimally configured VPC for you.  You will need the security group ID of this newly-minted VPC.  Execute this step to fetch that ID.  
+> Note: This step uses the `aws-cli` not the `ecs-cli`
 ```bash
 aws ec2 describe-security-groups --filters Name=vpc-id,Values=VPC_ID --region us-east-1
 ```
