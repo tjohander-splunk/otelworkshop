@@ -1,14 +1,23 @@
+>https://stackoverflow.com/questions/54174290/fargate-error-cannot-pull-container-hosted-in-ecr-from-a-private-subnet?rq=1 ) *DNSSupport*
+
 This will guide you through setting up an instrumented application, sending its telemetry to a sidecar instance of the Splunk OpenTelemetry Collector, using the traditional AWS CLI toolset.
 
 Instructions for this guide are borrowed heavily from [this](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_AWSCLI_Fargate.html) AWS tutorial.
 
 ## Create the Task Execution Role
-This role will be required in order to eecute the ECS Task. Note the ARN of the Task Execution Role. It's needed in the next step.
+This role will be required in order to execute the ECS Task. This role will need IAM permissions for the `logs:CreateLogGroup` action.  These two steps provision the role, assume role capabilities and an IAM Managed Policy for Full Logs Access.  For the purposes of this tutorial, these permissions are sufficient.  Your specific scenario may requite tighter controls or the ability to use an existing IAM role and policy with the required permissions.  
+
+Two steps are captured here to create the Role and attach the managed policy.  Note the ARN of the Task Execution Role. It's needed in the next step.
 > Region is optional, the default is whatever is set in your AWS CLI profile
 ```bash
 aws iam create-role \
 --role-name ecsTaskExecutionRole \
 --assume-role-policy-document file://task-execution-assume-role.json
+```
+```bash
+aws iam attach-role-policy \
+--role-name ecsTaskExecutionRole \
+--policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
 ```
 
 ## Prepare `tracegen-java-otel-fargate-otelcol.json` File
@@ -135,7 +144,13 @@ taskDefinitionArns:
 ### This will create a service running in a private subnet
 > The value for `--task-definition` will come from the output in the step "Register Task Definition".  Refer to the property `taskDefinitionArn`.  In the example above, `taskDefinitionArn: arn:aws:ecs:us-east-1:455790677231:task-definition/tracegen-java-otel-fargate:1`, the task definition value would be `tracegen-java-otel-fargate:1`.
 ```bash
-aws ecs create-service --cluster fargate-cluster --service-name fargate-service --task-definition tracegen-java-otel-fargate:1 --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-022a62ebe1b8443b0],securityGroups=[sg-0476905d446ec5084]}"
+aws ecs create-service \
+--cluster fargate-cluster \
+--service-name fargate-service \
+--task-definition tracegen-java-otel-fargate:1 \
+--desired-count 1 \
+--launch-type "FARGATE" \
+--network-configuration "awsvpcConfiguration={subnets=[subnet-03595eeba4d607bb0],securityGroups=[sg-034aaf8a4c4380c58]}"
 
 service:
   clusterArn: arn:aws:ecs:us-east-1:455790677231:cluster/fargate-cluster
@@ -223,4 +238,29 @@ aws ecs update-service --service fargate-service --cluster fargate-cluster --net
 ```bash
 aws ecs scale-service 
 aws ecs delete-service --service fargate-service --cluster fargate-cluster
+```
+```bash
+aws ecs create-service \
+--cluster fargate-cluster \
+--service-name fargate-service \
+--task-definition tracegen-java-otel-fargate:1 \
+--desired-count 1 \
+--launch-type "FARGATE" \
+--network-configuration "awsvpcConfiguration={subnets=[subnet-08736e98e80f72d59],assignPublicIp=ENABLED}" \
+--region us-east-1
+
+aws ecs delete-service \
+--cluster fargate-cluster \
+--service fargate-service \
+--region us-east-1
+
+aws ecs register-task-definition \
+--cli-input-json file://tracegen-java-otel-fargate-otelcol.json
+
+aws ecs update-service \
+--cluster fargate-cluster \
+--service fargate-service \
+--task-definition tracegen-java-otel-fargate:6 \
+--network-configuration "awsvpcConfiguration={subnets=[subnet-03595eeba4d607bb0],securityGroups=[sg-034aaf8a4c4380c58]}"
+--region us-east-1
 ```

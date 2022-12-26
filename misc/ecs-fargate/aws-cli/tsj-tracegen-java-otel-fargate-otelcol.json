@@ -5,7 +5,7 @@
         "logDriver": "awslogs",
         "options": {
           "awslogs-group": "ecs",
-          "awslogs-region": "us-east-2",
+          "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "tracegen-java-fargate",
           "awslogs-create-group": "true"
         }
@@ -42,7 +42,7 @@
         "logDriver": "awslogs",
         "options": {
           "awslogs-group": "otelcol",
-          "awslogs-region": "us-east-2",
+          "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "otelcol",
           "awslogs-create-group": "true"
         }
@@ -71,7 +71,7 @@
       "name": "splunk-otel-collector"
     }
   ],
-  "executionRoleArn": "arn:aws:iam::104053265317:role/ecs-full-access-role",
+  "executionRoleArn": "<ecsAccessRoleARN>",
   "cpu": "256",
   "memory": "512",
   "family": "tracegen-java-otel-fargate",
